@@ -2,7 +2,6 @@
 Little Rust Exercises for myself
 
 * [ ] hello world
-* [ ] 
 * [ ] count bytes in a file
 * [ ] transform file content
 * [ ] read a bmp
