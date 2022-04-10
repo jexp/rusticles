@@ -1,7 +1,7 @@
 # rusticles
 Little Rust Exercises for myself
 
-* [ ] hello world
+* [x] hello world
 * [ ] count bytes in a file
 * [ ] transform file content
 * [ ] read a bmp
