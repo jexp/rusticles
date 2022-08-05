@@ -38,7 +38,7 @@ impl Particle {
    fn new( position: Vector2<f32>) -> Self {
     let mut rng = rand::thread_rng();
     let green_blue = rng.gen::<f32>();
-    Self {  position : position, 
+    Self {  position, 
             acceleration : Vector2::from((0.0, 0.03)), 
             velocity: Vector2::from((rng.gen_range(-3.0..=3.0), rng.gen_range(-1.0..=3.0))), 
             lifespan: 255.0,
@@ -62,7 +62,7 @@ impl Particle {
     graphics.draw_circle(self.position, 8.0, col);
   }
 
-  fn is_alive(&mut self) -> bool {
+  fn is_alive(&self) -> bool {
      self.lifespan > 0.0
   }
 }
@@ -97,24 +97,21 @@ impl WindowHandler for MyWindowHandler
         if rand::thread_rng().gen::<f32>() < 0.3 {
             self.add_particle()
         }
-        match self.button_down_start {
-            Some(start) => {
-                for _ in 0..start.elapsed().as_millis()/250 {
-                    self.add_particle();
-                }
+        if let Some(start) = self.button_down_start {
+            for _ in 0..start.elapsed().as_millis()/250 {
+                self.add_particle();
             }
-            None => {}
         }
         for p in &mut self.particles {
             p.run(graphics);
         }
-        self.particles.retain(|p| p.lifespan > 0.0);
+        self.particles.retain(|p| p.is_alive());
         // println!("particles {}", &self.particles.len());
         helper.request_redraw();
     }
     fn on_mouse_move(
         &mut self,
-        helper: &mut WindowHelper,
+        _helper: &mut WindowHelper,
         position: Vector2<f32>
     ) {
         self.mouse = position;

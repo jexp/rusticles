@@ -11,3 +11,4 @@ Little Rust Exercises for myself
 * [ ] network requests (HTTP/REST)
 * [ ] minimal netcat clone (output from port, write stdin to port)
 * [ ] game of life (functional)
+* [ ] graph layout
