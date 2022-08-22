@@ -47,6 +47,12 @@ impl Universe {
         self.cells.as_slice().as_ptr()
     }
 }
+impl Universe {
+
+    pub fn cell_tuples(&self) -> Vec::<(usize, usize)> {
+        self.cells.ones().map(|idx| (idx/self.width, idx % self.width)).collect()
+    }
+}
 
 impl Universe {
     fn get_index(&self, row: usize, column: usize) -> usize {
@@ -126,6 +132,20 @@ impl Universe {
             if rng.gen::<f32>() < rate {
                 cells.set(i, Alive);
             }
+        }
+        Universe {
+            width,
+            height,
+            cells,
+        }
+    }
+}
+impl Universe {
+    pub fn init(width: usize, height: usize, fixture: &[(usize, usize)]) -> Universe {
+        let size = width*height;
+        let mut cells = FixedBitSet::with_capacity(size);
+        for (row,column) in fixture {
+            cells.set(row * width + column,true);
         }
         Universe {
             width,
